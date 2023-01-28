@@ -16,5 +16,6 @@ module.exports = {
 		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		indent: [2, 'tab'],
+		'vue/multi-word-component-names': 0,
 	},
 };
