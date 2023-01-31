@@ -24,3 +24,10 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style lang="scss" scoped>
+	.holder-time strong {
+		color: var(--primariy-text);
+	}
+
+</style>
