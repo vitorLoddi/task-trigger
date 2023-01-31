@@ -22,7 +22,7 @@
 				<box
 					v-if="listIsEmpty"
 				>
-					<p>Você não está muito produtivo hoje :(</p>
+					<p>Hoje você não está muito produtivo :(</p>
 				</box>
 			</div>
 		</div>
