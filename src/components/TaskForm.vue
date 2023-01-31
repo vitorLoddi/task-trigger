@@ -1,5 +1,5 @@
 <template>
-	<div class="box">
+	<div class="box form">
 		<div class="columns">
 			<div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
 				<label for="task">
@@ -26,6 +26,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// Components
 import Timer from '@/components/Timer.vue';
 
 export default defineComponent({
@@ -59,3 +61,9 @@ export default defineComponent({
 	},
 });
 </script>
+
+<style lang="scss" scoped>
+	.box.form {
+		background-color: var(--primary-bg);
+	}
+</style>
