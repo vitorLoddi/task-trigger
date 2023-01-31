@@ -1,10 +1,13 @@
 <template>
-	<main class="columns is-gapless is-multline">
+	<main
+		class="columns is-gapless is-multline"
+		:class="{ 'dark-mode': darkModeActive }"
+	>
 		<div class="column is-one-quarter">
-			<sidebar />
+			<sidebar @changeTheme="changeTheme" />
 		</div>
 
-		<div class="column is-three-quarter">
+		<div class="column is-three-quarter content">
 			<task-form
 				@saveTask="saveTask"
 			/>
@@ -51,6 +54,7 @@ export default defineComponent({
 	data() {
 		return {
 			toDoList: [] as ITask[],
+			darkModeActive: false,
 		};
 	},
 
@@ -61,15 +65,33 @@ export default defineComponent({
 	},
 
 	methods: {
-		saveTask(task : ITask) {
+		saveTask(task : ITask) : void {
 			this.toDoList.push(task);
+		},
+
+		changeTheme(darkModeActive : boolean) : void {
+			this.darkModeActive = darkModeActive;
 		},
 	},
 });
 </script>
 
-<style lang="scss" scoped>
-.list {
-	padding: 1.25rem;
-}
+<style lang="scss">
+	.list {
+		padding: 1.25rem;
+	}
+
+	main {
+		--primary-bg: #FFFFFF;
+		--primariy-text: #000000;
+	}
+
+	main.dark-mode {
+		--primary-bg: #2b2d42;
+		--primariy-text: #dddddd;
+	}
+
+	.content {
+		background-color: var(--primary-bg);
+	}
 </style>
