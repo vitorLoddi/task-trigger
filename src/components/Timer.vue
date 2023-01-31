@@ -20,6 +20,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
+// Components
 import Stopwatch from '@/components/Stopwatch.vue';
 import BaseButtonWithIcon from '@/components/Base/BaseButtonWithIcon.vue';
 
