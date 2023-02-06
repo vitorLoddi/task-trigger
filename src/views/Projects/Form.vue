@@ -36,6 +36,20 @@ import { useStore } from '@/store';
 export default defineComponent({
 	name: 'Form',
 
+	props: {
+		id: {
+			type: String,
+		},
+	},
+
+	mounted() {
+		if (this.id) {
+			const project = this.store.state.projects.find((proj) => proj.id === this.id);
+
+			this.nameProject = project?.name || '';
+		}
+	},
+
 	data() {
 		return {
 			nameProject: '',
@@ -44,10 +58,17 @@ export default defineComponent({
 
 	methods: {
 		saveProject() {
-			this.store.commit(
-				'ADD_PROJECT',
-				this.nameProject,
-			);
+			if (this.id) {
+				this.store.commit('CHANGE_PROJECT', {
+					id: this.id,
+					name: this.nameProject,
+				});
+			} else {
+				this.store.commit(
+					'ADD_PROJECT',
+					this.nameProject,
+				);
+			}
 
 			this.nameProject = '';
 
