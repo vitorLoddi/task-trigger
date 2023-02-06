@@ -1,7 +1,7 @@
 <template>
 	<div class="box form">
 		<div class="columns">
-			<div class="column is-8" role="form" aria-label="Formulário para criação de uma nova tarefa">
+			<div class="column is-5" role="form" aria-label="Formulário para criação de uma nova tarefa">
 				<label for="task">
 					<input
 						id="task"
@@ -12,6 +12,28 @@
 						:disabled="timerStarter"
 					/>
 				</label>
+			</div>
+
+			<div class="column is-3">
+				<div class="select">
+					<label for="selectProjects">
+						<select
+							id="selectProjects"
+							v-model="idProject"
+						>
+							<option value="">Selecione o projeto</option>
+
+							<option
+								v-for="project in projects"
+								:key="project.id"
+								:value="project.id"
+
+							>
+								{{ project.name }}
+							</option>
+						</select>
+					</label>
+				</div>
 			</div>
 
 			<div class="column">
@@ -25,10 +47,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 // Components
 import Timer from '@/components/Timer.vue';
+import { useStore } from 'vuex';
+import { key } from '@/store';
 
 export default defineComponent({
 	name: 'TaskForm',
@@ -41,6 +65,7 @@ export default defineComponent({
 		return {
 			timerStarter: false,
 			description: '',
+			idProject: '',
 		};
 	},
 
@@ -53,11 +78,20 @@ export default defineComponent({
 			this.$emit('saveTask', {
 				description: this.description,
 				elapsedTime,
+				project: this.projects.find((project) => project.id === this.idProject),
 			});
 
 			this.timerStarter = false;
 			this.description = '';
 		},
+	},
+
+	setup() {
+		const store = useStore(key);
+
+		return {
+			projects: computed(() => store.state.projects),
+		};
 	},
 });
 </script>
