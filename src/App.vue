@@ -8,23 +8,7 @@
 		</div>
 
 		<div class="column is-three-quarter content">
-			<task-form
-				@saveTask="saveTask"
-			/>
-
-			<div class="list">
-				<task
-					v-for="(task, index) in toDoList"
-					:key="index"
-					:task="task"
-				/>
-
-				<box
-					v-if="listIsEmpty"
-				>
-					<p>Hoje você não está muito produtivo :(</p>
-				</box>
-			</div>
+			<router-view />
 		</div>
 	</main>
 </template>
@@ -34,41 +18,21 @@ import { defineComponent } from 'vue';
 
 // Components
 import Sidebar from '@/components/Sidebar.vue';
-import TaskForm from '@/components/TaskForm.vue';
-import Task from '@/components/Task.vue';
-import Box from '@/components/Box.vue';
-
-// Interfaces
-import ITask from '@/interfaces/ITask';
 
 export default defineComponent({
 	name: 'App',
 
 	components: {
 		Sidebar,
-		TaskForm,
-		Task,
-		Box,
 	},
 
 	data() {
 		return {
-			toDoList: [] as ITask[],
 			darkModeActive: false,
 		};
 	},
 
-	computed: {
-		listIsEmpty() : boolean {
-			return !this.toDoList.length;
-		},
-	},
-
 	methods: {
-		saveTask(task : ITask) : void {
-			this.toDoList.push(task);
-		},
-
 		changeTheme(darkModeActive : boolean) : void {
 			this.darkModeActive = darkModeActive;
 		},
