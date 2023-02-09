@@ -4,6 +4,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Tasks from '@/views/Tasks.vue';
 import Projects from '@/views/Projects.vue';
 import Form from '@/views/Projects/Form.vue';
+import List from '@/views/Projects/List.vue';
 
 const routes: RouteRecordRaw[] = [
 	{
@@ -13,19 +14,25 @@ const routes: RouteRecordRaw[] = [
 	},
 	{
 		path: '/projetos',
-		name: 'Projetos',
 		component: Projects,
-	},
-	{
-		path: '/projetos/novo',
-		name: 'Novo Projeto',
-		component: Form,
-	},
-	{
-		path: '/projetos/:id',
-		name: 'Editar Projeto',
-		component: Form,
-		props: true,
+		children: [
+			{
+				path: '',
+				name: 'Projetos',
+				component: List,
+			},
+			{
+				path: 'novo',
+				name: 'Novo Projeto',
+				component: Form,
+			},
+			{
+				path: ':id',
+				name: 'Editar Projeto',
+				component: Form,
+				props: true,
+			},
+		],
 	},
 ];
 
