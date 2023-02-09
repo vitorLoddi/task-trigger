@@ -17,5 +17,7 @@ module.exports = {
 		'no-tabs': ['error', { allowIndentationTabs: true }],
 		indent: [2, 'tab'],
 		'vue/multi-word-component-names': 0,
+		'no-shadow': 'off',
+		'@typescript-eslint/no-shadow': ['error'],
 	},
 };
