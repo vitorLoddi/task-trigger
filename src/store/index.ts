@@ -1,10 +1,17 @@
 import IProject from '@/interfaces/IProject';
 import { InjectionKey } from 'vue';
 import { createStore, Store, useStore as vuexUseStore } from 'vuex';
-import { ADD_PROJECT, CHANGE_PROJECT, DELETE_PROJECT } from '@/store/type-mutations';
+import {
+	ADD_PROJECT,
+	CHANGE_PROJECT,
+	DELETE_PROJECT,
+	NOTIFY,
+} from '@/store/type-mutations';
+import { INotification } from '@/interfaces/INotification';
 
 interface State {
-	projects: IProject[]
+	projects: IProject[],
+	notifications: INotification[],
 }
 
 export const key: InjectionKey<Store<State>> = Symbol('Key');
@@ -12,6 +19,7 @@ export const key: InjectionKey<Store<State>> = Symbol('Key');
 export const store = createStore<State>({
 	state: {
 		projects: [],
+		notifications: [],
 	},
 
 	mutations: {
@@ -35,6 +43,19 @@ export const store = createStore<State>({
 			state.projects = state.projects.filter(
 				(proj) => proj.id !== idProject,
 			);
+		},
+
+		[NOTIFY](state, Notify: INotification) {
+			const newNotify = { ...Notify };
+
+			newNotify.id = new Date().getTime();
+			state.notifications.push(newNotify);
+
+			setTimeout(() => {
+				state.notifications = state.notifications.filter(
+					(notify) => notify.id !== newNotify.id,
+				);
+			}, 3000);
 		},
 	},
 });
