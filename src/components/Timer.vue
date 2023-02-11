@@ -38,6 +38,13 @@ export default defineComponent({
 		BaseButtonWithIcon,
 	},
 
+	props: {
+		idProject: {
+			type: String,
+			default: '',
+		},
+	},
+
 	data() {
 		return {
 			timeSeconds: 0,
@@ -48,6 +55,10 @@ export default defineComponent({
 	computed: {
 		timerIsActive() : boolean {
 			return !!this.timeSeconds;
+		},
+
+		projectIsSelected() : boolean {
+			return !!this.idProject;
 		},
 	},
 
@@ -65,7 +76,9 @@ export default defineComponent({
 
 			this.$emit('timerFinalized', this.timeSeconds);
 
-			this.timeSeconds = 0;
+			if (this.projectIsSelected) {
+				this.timeSeconds = 0;
+			}
 		},
 	},
 });
