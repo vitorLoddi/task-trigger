@@ -30,8 +30,11 @@ import { defineComponent } from 'vue';
 
 // Interfaces
 import { useStore } from '@/store';
-import { ADD_PROJECT, CHANGE_PROJECT, NOTIFY } from '@/store/type-mutations';
+import { ADD_PROJECT, CHANGE_PROJECT } from '@/store/type-mutations';
 import { TypeNotification } from '@/interfaces/INotification';
+
+// Hooks
+import useNotifier from '@/hooks/notifier';
 
 export default defineComponent({
 	name: 'Form',
@@ -75,11 +78,11 @@ export default defineComponent({
 
 			this.nameProject = '';
 
-			this.store.commit(NOTIFY, {
-				title: 'Projeto salvo',
-				text: 'Prontinho, seu projeto já está disponível :D',
-				type: TypeNotification.SUCESS,
-			});
+			this.notify(
+				'Excelente!',
+				'O projeto foi cadastrado com sucesso!',
+				TypeNotification.SUCESS,
+			);
 
 			this.$router.push('/projetos');
 		},
@@ -87,9 +90,11 @@ export default defineComponent({
 
 	setup() {
 		const store = useStore();
+		const { notify } = useNotifier();
 
 		return {
 			store,
+			notify,
 		};
 	},
 });
