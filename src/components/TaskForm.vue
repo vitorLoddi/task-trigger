@@ -40,6 +40,7 @@
 				<timer
 					@timerFinalized="endTask"
 					@timerStarted="timerStarter = true"
+					:idProject = idProject
 				/>
 			</div>
 		</div>
@@ -51,8 +52,9 @@ import { computed, defineComponent } from 'vue';
 
 // Components
 import Timer from '@/components/Timer.vue';
-import { useStore } from 'vuex';
-import { key } from '@/store';
+import { useStore } from '@/store';
+import { NOTIFY } from '@/store/type-mutations';
+import { TypeNotification } from '@/interfaces/INotification';
 
 export default defineComponent({
 	name: 'TaskForm',
@@ -75,10 +77,22 @@ export default defineComponent({
 
 	methods: {
 		endTask(elapsedTime: number) : void {
+			const project = this.projects.find((p) => p.id === this.idProject);
+
+			if (!project) {
+				this.store.commit(NOTIFY, {
+					title: 'Ops!',
+					text: 'Selecione um projeto antes de finalizar a tarefa!',
+					type: TypeNotification.FAILURE,
+				});
+
+				return;
+			}
+
 			this.$emit('saveTask', {
 				description: this.description,
 				elapsedTime,
-				project: this.projects.find((project) => project.id === this.idProject),
+				project,
 			});
 
 			this.timerStarter = false;
@@ -87,9 +101,10 @@ export default defineComponent({
 	},
 
 	setup() {
-		const store = useStore(key);
+		const store = useStore();
 
 		return {
+			store,
 			projects: computed(() => store.state.projects),
 		};
 	},
