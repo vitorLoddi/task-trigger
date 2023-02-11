@@ -7,6 +7,24 @@
 		<button class="btn-dark-mode" @click="changeTheme">
 			{{  darkModeActive ? 'Ativar' : 'Desativar ' }} modo escuro
 		</button>
+
+		<nav class="panel mt-5">
+			<ul>
+				<li>
+					<router-link to="/" class="link">
+						<i class="fa fa-tasks"></i>
+						Tarefas
+					</router-link>
+				</li>
+
+				<li>
+					<router-link to="/projetos" class="link">
+						<i class="fa fa-project-diagram"></i>
+						Projetos
+					</router-link>
+				</li>
+			</ul>
+		</nav>
 	</header>
 </template>
 
@@ -62,6 +80,22 @@ export default defineComponent({
 			box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
 			color: #fff;
 			transform: translateY(-7px);
+		}
+	}
+
+	.panel li {
+		margin: 8px 0;
+
+		.link {
+			color: #FFFFFF;
+
+			&:hover {
+				color: #FAF0CA;
+			}
+
+			&.router-link-active {
+				color: #FAF0CA;
+			}
 		}
 	}
 
