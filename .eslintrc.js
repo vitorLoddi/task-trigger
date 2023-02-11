@@ -19,5 +19,6 @@ module.exports = {
 		'vue/multi-word-component-names': 0,
 		'no-shadow': 'off',
 		'@typescript-eslint/no-shadow': ['error'],
+		'import/prefer-default-export': 'off',
 	},
 };
