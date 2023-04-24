@@ -4,10 +4,15 @@ import { createStore, Store, useStore as vuexUseStore } from 'vuex';
 import {
 	ADD_PROJECT,
 	CHANGE_PROJECT,
+	SET_PROJECTS,
 	DELETE_PROJECT,
 	NOTIFY,
 } from '@/store/type-mutations';
+import {
+	GET_PROJECTS,
+} from '@/store/type-actions';
 import { INotification } from '@/interfaces/INotification';
+import http from '@/http/index';
 
 interface State {
 	projects: IProject[],
@@ -23,6 +28,10 @@ export const store = createStore<State>({
 	},
 
 	mutations: {
+		[SET_PROJECTS](state, projects: IProject[]) {
+			state.projects = projects;
+		},
+
 		[ADD_PROJECT](state, nameProject: string) {
 			const project = {
 				id: new Date().toISOString(),
@@ -56,6 +65,13 @@ export const store = createStore<State>({
 					(notify) => notify.id !== newNotify.id,
 				);
 			}, 3000);
+		},
+	},
+
+	actions: {
+		[GET_PROJECTS]({ commit }) {
+			http.get('projects')
+				.then((response) => commit(SET_PROJECTS, response.data));
 		},
 	},
 });
