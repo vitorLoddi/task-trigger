@@ -1,5 +1,16 @@
 {
   "projects": [
-
+    {
+      "id": 1,
+      "name": "Projeto Alura"
+    },
+    {
+      "id": 2,
+      "name": "Aprendizagem de Estado"
+    },
+    {
+      "id": 3,
+      "name": "Aprendizagem Axios"
+    }
   ]
 }
