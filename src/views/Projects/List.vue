@@ -58,6 +58,7 @@ import { computed, defineComponent } from 'vue';
 // Interfaces
 import { useStore } from '@/store';
 import { DELETE_PROJECT } from '@/store/type-mutations';
+import { GET_PROJECTS } from '@/store/type-actions';
 
 export default defineComponent({
 	name: 'List',
@@ -70,6 +71,8 @@ export default defineComponent({
 
 	setup() {
 		const store = useStore();
+
+		store.dispatch(GET_PROJECTS);
 
 		return {
 			store,
