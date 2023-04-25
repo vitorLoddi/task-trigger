@@ -9,7 +9,10 @@ import {
 	NOTIFY,
 } from '@/store/type-mutations';
 import {
-	GET_PROJECTS,
+	AC_GET_PROJECTS,
+	AC_ADD_PROJECT,
+	AC_CHANGE_PROJECT,
+	AC_DELETE_PROJECT,
 } from '@/store/type-actions';
 import { INotification } from '@/interfaces/INotification';
 import http from '@/http/index';
@@ -48,7 +51,7 @@ export const store = createStore<State>({
 			state.projects[index] = project;
 		},
 
-		[DELETE_PROJECT](state, idProject : string) {
+		[DELETE_PROJECT](state, idProject: string) {
 			state.projects = state.projects.filter(
 				(proj) => proj.id !== idProject,
 			);
@@ -69,9 +72,24 @@ export const store = createStore<State>({
 	},
 
 	actions: {
-		[GET_PROJECTS]({ commit }) {
+		[AC_GET_PROJECTS]({ commit }) {
 			http.get('projects')
 				.then((response) => commit(SET_PROJECTS, response.data));
+		},
+
+		[AC_ADD_PROJECT](context, nameProject: string) {
+			return http.post('/projects', {
+				name: nameProject,
+			});
+		},
+
+		[AC_CHANGE_PROJECT](context, project: IProject) {
+			return http.put(`/projects/${project.id}`, project);
+		},
+
+		[AC_DELETE_PROJECT]({ commit }, id: string) {
+			return http.delete(`/projects/${id}`)
+				.then(() => commit(DELETE_PROJECT, id));
 		},
 	},
 });
