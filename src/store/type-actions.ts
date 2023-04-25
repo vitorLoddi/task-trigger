@@ -2,3 +2,7 @@ export const AC_GET_PROJECTS = 'AC_GET_PROJECTS';
 export const AC_ADD_PROJECT = 'AC_ADD_PROJECT';
 export const AC_CHANGE_PROJECT = 'AC_CHANGE_PROJECT';
 export const AC_DELETE_PROJECT = 'AC_DELETE_PROJECT';
+
+export const AC_GET_TASKS = 'AC_GET_TASKS';
+export const AC_ADD_TASK = 'AC_ADD_TASK';
+export const AC_CHANGE_TASK = 'AC_CHANGE_TASK';
