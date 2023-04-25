@@ -20,5 +20,6 @@ module.exports = {
 		'no-shadow': 'off',
 		'@typescript-eslint/no-shadow': ['error'],
 		'import/prefer-default-export': 'off',
+		'vuejs-accessibility/click-events-have-key-events': 'off',
 	},
 };
