@@ -30,7 +30,7 @@ import { defineComponent } from 'vue';
 
 // Interfaces
 import { useStore } from '@/store';
-import { ADD_PROJECT, CHANGE_PROJECT } from '@/store/type-mutations';
+import { AC_ADD_PROJECT, AC_CHANGE_PROJECT } from '@/store/type-actions';
 import { TypeNotification } from '@/interfaces/INotification';
 
 // Hooks
@@ -62,26 +62,30 @@ export default defineComponent({
 	methods: {
 		saveProject() {
 			if (this.id) {
-				this.store.commit(
-					CHANGE_PROJECT,
+				this.store.dispatch(
+					AC_CHANGE_PROJECT,
 					{
 						id: this.id,
 						name: this.nameProject,
 					},
-				);
+				).then(() => {
+					this.notifySuccessRegister();
+				});
 			} else {
-				this.store.commit(
-					ADD_PROJECT,
-					this.nameProject,
-				);
+				this.store.dispatch(AC_ADD_PROJECT, this.nameProject)
+					.then(() => {
+						this.notifySuccessRegister();
+					});
 			}
+		},
 
+		notifySuccessRegister() {
 			this.nameProject = '';
 
 			this.notify(
 				'Excelente!',
 				'O projeto foi cadastrado com sucesso!',
-				TypeNotification.SUCESS,
+				TypeNotification.SUCCESS,
 			);
 
 			this.$router.push('/projetos');

@@ -57,26 +57,38 @@ import { computed, defineComponent } from 'vue';
 
 // Interfaces
 import { useStore } from '@/store';
-import { DELETE_PROJECT } from '@/store/type-mutations';
-import { GET_PROJECTS } from '@/store/type-actions';
+import { AC_GET_PROJECTS, AC_DELETE_PROJECT } from '@/store/type-actions';
+import { TypeNotification } from '@/interfaces/INotification';
+
+// Hooks
+import useNotifier from '@/hooks/notifier';
 
 export default defineComponent({
 	name: 'List',
 
 	methods: {
 		exclude(id: string) {
-			this.store.commit(DELETE_PROJECT, id);
+			this.store.dispatch(AC_DELETE_PROJECT, id)
+				.then(() => {
+					this.notify(
+						'Excelente!',
+						'O projeto foi deletado com sucesso!',
+						TypeNotification.SUCCESS,
+					);
+				});
 		},
 	},
 
 	setup() {
 		const store = useStore();
+		const { notify } = useNotifier();
 
-		store.dispatch(GET_PROJECTS);
+		store.dispatch(AC_GET_PROJECTS);
 
 		return {
 			store,
 			projects: computed(() => store.state.projects),
+			notify,
 		};
 	},
 });
