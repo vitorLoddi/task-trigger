@@ -1,4 +1,5 @@
 import IProject from '@/interfaces/IProject';
+import ITask from '@/interfaces/ITask';
 import { InjectionKey } from 'vue';
 import { createStore, Store, useStore as vuexUseStore } from 'vuex';
 import {
@@ -7,18 +8,25 @@ import {
 	SET_PROJECTS,
 	DELETE_PROJECT,
 	NOTIFY,
+	SET_TASKS,
+	ADD_TASK,
+	CHANGE_TASK,
 } from '@/store/type-mutations';
 import {
 	AC_GET_PROJECTS,
 	AC_ADD_PROJECT,
 	AC_CHANGE_PROJECT,
 	AC_DELETE_PROJECT,
+	AC_GET_TASKS,
+	AC_ADD_TASK,
+	AC_CHANGE_TASK,
 } from '@/store/type-actions';
 import { INotification } from '@/interfaces/INotification';
 import http from '@/http/index';
 
 interface State {
 	projects: IProject[],
+	tasks: ITask[],
 	notifications: INotification[],
 }
 
@@ -28,6 +36,7 @@ export const store = createStore<State>({
 	state: {
 		projects: [],
 		notifications: [],
+		tasks: [],
 	},
 
 	mutations: {
@@ -69,6 +78,21 @@ export const store = createStore<State>({
 				);
 			}, 3000);
 		},
+
+		[SET_TASKS](state, tasks: ITask[]) {
+			state.tasks = tasks;
+		},
+
+		[ADD_TASK](state, task: ITask) {
+			state.tasks.push(task);
+		},
+
+		[CHANGE_TASK](state, task: ITask) {
+			const index = state.tasks.findIndex(
+				(t) => t.id === task.id,
+			);
+			state.tasks[index] = task;
+		},
 	},
 
 	actions: {
@@ -90,6 +114,21 @@ export const store = createStore<State>({
 		[AC_DELETE_PROJECT]({ commit }, id: string) {
 			return http.delete(`/projects/${id}`)
 				.then(() => commit(DELETE_PROJECT, id));
+		},
+
+		[AC_GET_TASKS]({ commit }) {
+			return http.get('/tasks')
+				.then((response) => commit(SET_TASKS, response.data));
+		},
+
+		[AC_ADD_TASK]({ commit }, task: ITask) {
+			return http.post('/tasks', task)
+				.then((response) => commit(ADD_TASK, response.data));
+		},
+
+		[AC_CHANGE_TASK]({ commit }, task: ITask) {
+			return http.put(`/tasks/${task.id}`, task)
+				.then((response) => commit('CHANGE_TASK', response.data));
 		},
 	},
 });

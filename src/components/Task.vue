@@ -1,6 +1,6 @@
 <template>
 	<box>
-		<div class="columns">
+		<div class="columns pointer" @click="taskClicked">
 			<div class="column is-4">
 				{{ task.description || 'Tarefa não identificada' }}
 			</div>
@@ -36,6 +36,10 @@ export default defineComponent({
 		Stopwatch,
 	},
 
+	emmits: [
+		'taskClicked',
+	],
+
 	props: {
 		task: {
 			type: Object as PropType<ITask>,
@@ -43,5 +47,17 @@ export default defineComponent({
 		},
 	},
 
+	methods: {
+		taskClicked() : void {
+			this.$emit('taskClicked', this.task);
+		},
+	},
+
 });
 </script>
+
+<style lang="scss" scoped>
+	.pointer {
+		cursor: pointer;
+	}
+</style>
