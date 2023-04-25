@@ -27,7 +27,7 @@ export default defineComponent({
 	data() {
 		return {
 			situation: {
-				[TypeNotification.SUCESS]: 'is-success',
+				[TypeNotification.SUCCESS]: 'is-success',
 				[TypeNotification.ATTENTION]: 'is-warning',
 				[TypeNotification.FAILURE]: 'is-danger',
 			},

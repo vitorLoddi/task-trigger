@@ -1,5 +1,5 @@
 export enum TypeNotification {
-	SUCESS,
+	SUCCESS,
 	FAILURE,
 	ATTENTION,
 }
