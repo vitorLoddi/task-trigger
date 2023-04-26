@@ -149,7 +149,7 @@ export default defineComponent({
 
 		return {
 			store,
-			toDoList: computed(() => store.state.tasks),
+			toDoList: computed(() => store.state.task.tasks),
 			notify,
 		};
 	},
